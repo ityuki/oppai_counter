@@ -7,6 +7,6 @@ RUN echo "@edge http://nl.alpinelinux.org/alpine/edge/main" >> /etc/apk/reposito
 
 ADD ./ opcnt
 WORKDIR opcnt
-RUN bundle install --path vendor/bundle
+RUN cp .oppai $HOME/ && bundle install --path vendor/bundle
 
 ENTRYPOINT ["bundle", "exec", "ruby", "oppai_count.rb"]
