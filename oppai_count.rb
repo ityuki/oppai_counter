@@ -16,10 +16,6 @@ cnt = 0
 EM.run do
   ws = Faye::WebSocket::Client.new(url)
 
-  ws.on :open do
-    p [:open]
-  end
-
   ws.on :message do |event|
     data = JSON.parse(event.data)
     if data['text'] =~ /おっぱい/ and data['user'] != config['bot_id'] and data['type'] == 'message'
@@ -40,7 +36,6 @@ EM.run do
   end
 
   ws.on :close do
-    p [:close, event.code]
     ws = nil
     EM.stop
   end
