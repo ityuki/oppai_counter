@@ -12,13 +12,19 @@ res = HTTP.post("https://slack.com/api/rtm.start", params: {
 rc = JSON.parse(res.body)
 url = rc['url']
 
-cnt = 0
+# 苦し紛れのおっぱい数継承
+if ARGV[0].nil?
+  cnt = 0
+else
+  cnt = ARGV[0].to_i
+end
+
 EM.run do
   ws = Faye::WebSocket::Client.new(url)
 
   ws.on :message do |event|
     data = JSON.parse(event.data)
-    if data['text'] =~ /おっぱい/ and data['user'] != config['bot_id'] and data['type'] == 'message'
+    if data['text'] =~ /お.*っ.*ぱ.*い/ and data['user'] != config['bot_id'] and data['type'] == 'message'
       cnt += 1
     elsif data['text'] == "oppai count" and data['type'] == 'message' and data['user'] != config['bot_id']
       ws.send({
@@ -38,5 +44,6 @@ EM.run do
   ws.on :close do
     ws = nil
     EM.stop
+    # TODO おっぱい数を記録せよ
   end
 end
