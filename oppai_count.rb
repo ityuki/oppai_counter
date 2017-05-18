@@ -36,10 +36,8 @@ EM.run do
 
   ws.on :message do |event|
     data = JSON.parse(event.data)
-    if data['text'] =~ /おっぱい/ and judge(data, config['bot_id'])
-      cnt += data['text'].scan(/おっぱい/).size
-    elsif data['text'] =~ /お.*っ.*ぱ.*い/ and judge(data, config['bot_id'])
-      cnt += 1
+    if data['text'] =~ /お.*?っ.*?ぱ.*?い/ and judge(data, config['bot_id'])
+      cnt += data['text'].scan(/お.*?っ.*?ぱ.*?い/).size
     elsif data['text'] == "oppai count" and judge(data, config['bot_id'])
       ws.send({
         type: 'message',
