@@ -5,6 +5,7 @@ require 'eventmachine'
 require 'faye/websocket'
 require File.expand_path('../oppai_methods.rb', __FILE__)
 
+# 暫定メソッド
 def judge(data, bot_id)
   Oppai::Utils.oppai_judge(data, bot_id)
 end
@@ -13,6 +14,7 @@ def oppai_method(fun)
   Oppai::Utils.send(fun)
 end
 
+# 諸設定
 config = YAML.load_file("#{ENV['HOME']}/.oppai")
 res = HTTP.post("https://slack.com/api/rtm.start", params: {
   token: config['token']
@@ -28,12 +30,15 @@ else
   cnt = ARGV[0].to_i
 end
 
+# oppai_info本体
 EM.run do
   ws = Faye::WebSocket::Client.new(url)
 
   ws.on :message do |event|
     data = JSON.parse(event.data)
-    if data['text'] =~ /お.*っ.*ぱ.*い/ and judge(data, config['bot_id'])
+    if data['text'] =~ /おっぱい/ and judge(data, config['bot_id'])
+      cnt += data['text'].scan(/おっぱい/).size
+    elsif data['text'] =~ /お.*っ.*ぱ.*い/ and judge(data, config['bot_id'])
       cnt += 1
     elsif data['text'] == "oppai count" and judge(data, config['bot_id'])
       ws.send({
