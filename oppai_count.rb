@@ -82,10 +82,11 @@ EM.run do
       ws.send({
         type: 'message',
         text: "Usage: oppai <subcommand>\n\
-               oppai count : おっぱい数を報告します.\n\
-               oppai word  : おっぱい宣教師のありがたい語録を表示します.\n\
-               oppai flag  : おっぱいフラグをたてます.\n\
-               oppai help  : このヘルプを表示します.",
+               oppai count\tおっぱい数を報告します.\n\
+               oppai word\tおっぱい宣教師のありがたい語録を表示します.\n\
+               oppai flag\tおっぱいフラグをたてます.\n\
+               oppai per\tチャンネル内のおっぱい濃度を表示します.(test)\n\
+               oppai help\tこのヘルプを表示します.",
         channel: data['channel']
       }.to_json)
     end
