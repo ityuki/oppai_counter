@@ -10,25 +10,27 @@ def judge(data, bot_id)
   Oppai::Utils.oppai_judge(data, bot_id)
 end
 
-def oppai_method(fun)
-  Oppai::Utils.send(fun)
-end
-
 # 諸設定
+
+## botのtokenとidを読み込む
 config = YAML.load_file("#{ENV['HOME']}/.oppai")
+
+## Slack RTM APIの利用
 res = HTTP.post("https://slack.com/api/rtm.start", params: {
   token: config['token']
 })
-
 rc = JSON.parse(res.body)
 url = rc['url']
 
-# 苦し紛れのおっぱい数継承
+## 苦し紛れのおっぱい数継承
 if ARGV[0].nil?
   cnt = 0
 else
   cnt = ARGV[0].to_i
 end
+
+## Oppai::Utilsのインスタンス作成
+op = Oppai::Utils.new
 
 # oppai_info本体
 EM.run do
@@ -47,13 +49,13 @@ EM.run do
     elsif data['text'] == "oppai word" and judge(data, config['bot_id'])
       ws.send({
         type: 'message',
-        text: oppai_method(:word),
+        text: op.word,
         channel: data['channel']
       }.to_json)
     elsif data['text'] == "oppai flag" and judge(data, config['bot_id'])
       ws.send({
         type: 'message',
-        text: oppai_method(:flag),
+        text: op.flag,
         channel: data['channel']
       }.to_json)
     elsif data['text'] == "oppai help" and judge(data, config['bot_id'])
