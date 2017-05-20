@@ -36,6 +36,7 @@ class Oppai
           "現在のおっぱい濃度は #{per} %です"
         rescue
           p mes_list
+          "`oppai per` は使えないっぱいです"
         end
       end
     end
