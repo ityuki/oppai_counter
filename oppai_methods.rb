@@ -25,5 +25,15 @@ class Oppai
     def flag
       @flags.sample
     end
+
+    def per(mes_list)
+      if mes_list.size == 0
+        "おっぱわーが足りません"
+      else
+        opper = mes_list.reduce(0) { |sum, m| sum += m.scan(/お.*?っ.*?ぱ.*?い/).size }
+        per = 100 * opper / mes_list.size
+        "現在のおっぱい濃度は #{per} %です"
+      end
+    end
   end
 end

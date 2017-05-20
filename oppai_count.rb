@@ -32,12 +32,25 @@ end
 ## Oppai::Utilsのインスタンス作成
 op = Oppai::Utils.new
 
+mes_list = []
+
 # oppai_info本体
 EM.run do
   ws = Faye::WebSocket::Client.new(url)
 
   ws.on :message do |event|
     data = JSON.parse(event.data)
+
+    # おっぱいコマンドとbotのreplyを除く直近30件の発言を保存
+    if data['text'] !~ /^oppai [a-z]+$/ and judge(data, config['bot_id'])
+      if mes_list.size < 30
+        mes_list.push(data['text'])
+      else
+        mes_list.shift
+        mes_listpush(data['text'])
+      end
+    end
+
     if data['text'] =~ /お.*?っ.*?ぱ.*?い/ and judge(data, config['bot_id'])
       cnt += data['text'].scan(/お.*?っ.*?ぱ.*?い/).size
     elsif data['text'] == "oppai count" and judge(data, config['bot_id'])
@@ -56,6 +69,13 @@ EM.run do
       ws.send({
         type: 'message',
         text: op.flag,
+        channel: data['channel']
+      }.to_json)
+    # おっぱい濃度(テスト版)
+    elsif data['text'] == "oppai per" and judge(data, config['bot_id'])
+      ws.send({
+        type: 'message',
+        text: op.per(mes_list),
         channel: data['channel']
       }.to_json)
     elsif data['text'] == "oppai help" and judge(data, config['bot_id'])
