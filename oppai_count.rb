@@ -47,7 +47,7 @@ EM.run do
         mes_list.push(data['text'])
       else
         mes_list.shift
-        mes_listpush(data['text'])
+        mes_list.push(data['text'])
       end
     end
 
