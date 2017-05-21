@@ -20,7 +20,7 @@ class Oppai
     end
 
     def method_missing(name)
-      "`#{name}` なんてコマンドはないっぱい。出直してくるっぱい"
+      "`#{name}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
     end
 
     # おっぱい数を返す
