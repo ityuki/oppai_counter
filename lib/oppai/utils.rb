@@ -46,8 +46,7 @@ class Oppai
           opper = @mes_list.reduce(0) { |sum, m| sum += m.scan(/お.*?っ.*?ぱ.*?い/).size }
           per = 100 * opper / @mes_list.size
           "現在のおっぱい濃度は #{per} %です"
-        rescue
-          p @mes_list
+        rescue => e
           "`oppai per` は使えないっぱいです"
         end
       end

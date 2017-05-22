@@ -38,7 +38,7 @@ EM.run do
     # botの発言はシカト
     if Oppai::Utils.op_judge(data, config['bot_id'])
       # おっぱいコマンドとbotのreplyを除く直近30件の発言を保存
-      if data['text'] !~ /^oppai [a-z]+$/
+      if data['text'] !~ /^oppai [a-z]+$/ and not data['message'].is_a?(Hash)
         if op.mes_list.size < 30
           op.mes_list.push(data['text'])
         else
