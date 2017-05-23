@@ -35,9 +35,6 @@ EM.run do
   ws.on :message do |event|
     data = JSON.parse(event.data)
 
-    p data
-    p op.mes_list
-
     # botの発言はシカト
     if Oppai::Utils.op_judge(data, config['bot_id'])
       # おっぱいコマンドとbotのreplyと編集・削除を除く直近30件の発言を保存
