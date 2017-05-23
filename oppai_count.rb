@@ -35,10 +35,13 @@ EM.run do
   ws.on :message do |event|
     data = JSON.parse(event.data)
 
+    p data
+    p op.mes_list
+
     # botの発言はシカト
     if Oppai::Utils.op_judge(data, config['bot_id'])
-      # おっぱいコマンドとbotのreplyを除く直近30件の発言を保存
-      if data['text'] !~ /^oppai [a-z]+$/ and not data['message'].is_a?(Hash)
+      # おっぱいコマンドとbotのreplyと編集・削除を除く直近30件の発言を保存
+      if data['text'] !~ /^oppai [a-z]+$/ and not data.has_key?('subtype')
         if op.mes_list.size < 30
           op.mes_list.push(data['text'])
         else
