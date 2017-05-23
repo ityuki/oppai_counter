@@ -58,7 +58,7 @@ EM.run do
         oppai, cmd = data['text'].split(' ')
         ws.send({
           type: 'message',
-          text: op.send(cmd.intern),
+          text: op.invoke(cmd),
           channel: data['channel']
         }.to_json)
       end
