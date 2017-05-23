@@ -54,7 +54,7 @@ EM.run do
       if data['text'] =~ /お.*?っ.*?ぱ.*?い/
         op.cnt += data['text'].scan(/お.*?っ.*?ぱ.*?い/).size
       # おっぱいコマンドの呼び出し
-      elsif data['text'] =~ /^oppai [a-z]+$/
+      elsif data['text'] =~ /^oppai [a-z]+$/ and not data['text'].include?("\n")
         oppai, cmd = data['text'].split(' ')
         ws.send({
           type: 'message',
