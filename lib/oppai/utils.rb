@@ -17,10 +17,19 @@ class Oppai
       @words = File.open(File.expand_path('./dicts/word.opp')).readlines.map(&:chomp)
       @flags = File.open(File.expand_path('./dicts/flag.opp')).readlines.map(&:chomp)
       @mes_list = []
+      @white_methods = %w(count word flag per help)
+      @destroy_methods = %w(abort throw raise fail exit sleep
+                            inspect new clone initialize)
     end
 
-    def method_missing(name)
-      "`#{name}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
+    def invoke(cmd)
+      if @white_methods.include?(cmd)
+        self.send(cmd.intern)
+      elsif @destroy_methods.include?(cmd)
+        "散々苦渋を舐めさせられた `#{cmd}` は対策済みっぱい。一昨日きやがれっぱい"
+      else
+        "`#{name}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
+      end
     end
 
     # おっぱい数を返す
