@@ -28,7 +28,7 @@ class Oppai
       elsif @destroy_methods.include?(cmd)
         "散々苦渋を舐めさせられた `#{cmd}` は対策済みっぱい。一昨日きやがれっぱい"
       else
-        "`#{name}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
+        "`#{cmd}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
       end
     end
 
