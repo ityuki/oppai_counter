@@ -3,8 +3,7 @@ class Oppai
     attr_accessor :cnt, :mes_list
     attr_reader :words, :flags
 
-    def initialize(count)
-      @cnt = count
+    def initialize
       @mes_list = []
       @words = File.open(File.expand_path('./dicts/word.opp')).readlines.map(&:chomp)
       @flags = File.open(File.expand_path('./dicts/flag.opp')).readlines.map(&:chomp)
