@@ -10,20 +10,20 @@ class Oppai
       @data = data
     end
 
-    def check_execute(sent_command)
+    def check_and_execute(sent_command)
       if white_methods.include?(sent_command)
         self.send(sent_command.intern)
       elsif destroy_methods.include?(sent_command)
         "散々苦渋を舐めさせられた `#{sent_command}` は対策済みっぱい。一昨日きやがれっぱい"
       else
         # 似たようなコマンドを探す
-        lcmd = likely.word(cmd)
+        lcmd = likely.word(sent_command)
         if white_methods.include?(lcmd)
           "もしかして `#{lcmd}` っぱい？"
         elsif destroy_methods.include?(lcmd)
           "`#{lcmd}` っぽい文字列を入れるなっぱい！"
         else
-          "`#{cmd}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
+          "`#{sent_command}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
         end
       end
     end

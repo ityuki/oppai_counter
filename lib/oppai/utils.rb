@@ -20,7 +20,7 @@ class Oppai
     def invoke(sent_command)
       cmd.check_and_execute(sent_command)
     rescue => e
-      puts e.messagae
+      puts e.message
       puts e.backtrace
       "よくわからないエラーが発生してるっぱい。ちょっと待つっぱい"
     end
