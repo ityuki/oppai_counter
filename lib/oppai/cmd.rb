@@ -1,34 +1,54 @@
 class Oppai
   class Cmd
-    attr_reader :white_methods, :destroy_methods
+    attr_reader :white_methods, :destroy_methods, :data, :likely
 
-    def initialize
+    def initialize(data)
       @white_methods = %w(count word flag per help)
       @destroy_methods = %w(abort throw raise fail exit sleep
                             inspect new clone initialize)
+      @likely = LikelyKeyword.new(@white_methods + @destroy_methods)
+      @data = data
+    end
+
+    def check_execute(sent_command)
+      if white_methods.include?(sent_command)
+        self.send(sent_command.intern)
+      elsif destroy_methods.include?(sent_command)
+        "散々苦渋を舐めさせられた `#{sent_command}` は対策済みっぱい。一昨日きやがれっぱい"
+      else
+        # 似たようなコマンドを探す
+        lcmd = likely.word(cmd)
+        if white_methods.include?(lcmd)
+          "もしかして `#{lcmd}` っぱい？"
+        elsif destroy_methods.include?(lcmd)
+          "`#{lcmd}` っぽい文字列を入れるなっぱい！"
+        else
+          "`#{cmd}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
+        end
+      end
     end
 
     # おっぱい数を返す
     def count
-      "現在 #{@cnt}おっぱいです"
+      "現在 #{data.cnt}おっぱいです"
     end
 
     # おっぱい宣教師語録+α
     def word
-      @words.sample
+      data.words.sample
     end
 
     # おっぱいフラグ
     def flag
-      @flags.sample
+      data.flags.sample
     end
 
     def per
-      if @mes_list.size == 0
+      if data.mes_list.size == 0
         "おっぱわーが足りません"
       else
-        opper = @mes_list.reduce(0) { |sum, m| sum += m.scan(/お.*?っ.*?ぱ.*?い/).size }
-        per = 100 * opper / @mes_list.size
+        opper = data.mes_list.reduce(0) { |sum, m| sum += m.scan(/お.*?っ.*?ぱ.*?い/).size }
+        per = 100 * opper / data.mes_list.size
         "現在のおっぱい濃度は #{per} %です"
       end
     end
