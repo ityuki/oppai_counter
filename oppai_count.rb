@@ -3,7 +3,7 @@ require 'json'
 require 'yaml'
 require 'eventmachine'
 require 'faye/websocket'
-require File.expand_path('../lib/oppai/utils.rb', __FILE__)
+require File.expand_path('../lib/oppai.rb', __FILE__)
 
 # 諸設定
 
