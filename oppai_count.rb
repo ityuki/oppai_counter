@@ -25,7 +25,7 @@ if ARGV[0].nil?
 else
   op_data = Oppai::Data.new(ARGV[0].to_i)
 end
-op_util = Oppai::Utils.new(op_data)
+event_processor = Oppai::EventProcessor.new(op_data)
 
 
 # oppai_info本体
@@ -33,33 +33,7 @@ EM.run do
   ws = Faye::WebSocket::Client.new(url)
 
   ws.on :message do |event|
-    data = JSON.parse(event.data)
-
-    # botの発言はシカト
-    if Oppai::Utils.op_judge(data, config['bot_id'])
-      # おっぱいコマンドとbotのreplyと編集・削除を除く直近30件の発言を保存
-      if data['text'] !~ /^oppai [a-z]+$/ and not data.has_key?('subtype')
-        if op_data.message_list.size < 30
-          op_data.add_message(data['text'])
-        else
-          op_data.del_message
-          op_data.add_message(data['text'])
-        end
-      end
-
-      # おっぱい数のカウント
-      if data['text'] =~ /お.*?っ.*?ぱ.*?い/
-        op_data.add_oppai_count(data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
-      # おっぱいコマンドの呼び出し
-      elsif data['text'] =~ /^oppai [a-z]+$/ and not data['text'].include?("\n")
-        oppai, cmd = data['text'].split(' ')
-        ws.send({
-          type: 'message',
-          text: op_util.invoke(cmd),
-          channel: data['channel']
-        }.to_json)
-      end
-    end
+    event_processor.process(event)
   end
 
   ws.on :close do

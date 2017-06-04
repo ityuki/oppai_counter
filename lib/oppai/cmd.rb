@@ -26,6 +26,10 @@ class Oppai
           "`#{sent_command}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
         end
       end
+    rescue => e
+      puts e.message
+      puts e.backtrace
+      "よくわからないエラーが発生してるっぱい。ちょっと待つっぱい"
     end
 
     # おっぱい数を返す
