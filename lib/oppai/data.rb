@@ -1,7 +1,6 @@
 class Oppai
   class Data
-    attr_accessor :oppai_count
-    attr_reader :message_list, :words, :flags
+    attr_reader :oppai_count, :message_list, :words, :flags
 
     def initialize(oppai_count)
       @oppai_count = oppai_count
