@@ -18,15 +18,14 @@ rc = JSON.parse(res.body)
 url = rc['url']
 
 ## Oppai::Utilsのインスタンス作成
-op_data = Oppai::Data.new
-op_util = Oppai::Utils.new(op_data)
 
 ## 苦し紛れのおっぱい数継承
 if ARGV[0].nil?
-  op_data.cnt = 0
+  op_data = Oppai::Data.new(0)
 else
-  op_data.cnt = ARGV[0].to_i
+  op_data = Oppai::Data.new(ARGV[0].to_i)
 end
+op_util = Oppai::Utils.new(op_data)
 
 
 # oppai_info本体
@@ -41,16 +40,16 @@ EM.run do
       # おっぱいコマンドとbotのreplyと編集・削除を除く直近30件の発言を保存
       if data['text'] !~ /^oppai [a-z]+$/ and not data.has_key?('subtype')
         if op_data.mes_list.size < 30
-          op_data.mes_list.push(data['text'])
+          op_data.add_message(data['text'])
         else
-          op_data.mes_list.shift
-          op_data.mes_list.push(data['text'])
+          op_data.del_message
+          op_data.add_message(data['text'])
         end
       end
 
       # おっぱい数のカウント
       if data['text'] =~ /お.*?っ.*?ぱ.*?い/
-        op_data.cnt += data['text'].scan(/お.*?っ.*?ぱ.*?い/).size
+        op_data.add_oppai(data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
       # おっぱいコマンドの呼び出し
       elsif data['text'] =~ /^oppai [a-z]+$/ and not data['text'].include?("\n")
         oppai, cmd = data['text'].split(' ')
