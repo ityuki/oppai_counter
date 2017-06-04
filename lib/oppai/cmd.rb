@@ -58,7 +58,7 @@ class Oppai
               oppai count\tおっぱい数を報告します.\n\
               oppai word\tおっぱい宣教師のありがたい語録を表示します.\n\
               oppai flag\tおっぱいフラグをたてます.\n\
-              oppai per\tチャンネル内のおっぱい濃度を表示します.(test)\n\
+              oppai per\tチャンネル内のおっぱい濃度を表示します.\n\
               oppai help\tこのヘルプを表示します."
     end
   end
