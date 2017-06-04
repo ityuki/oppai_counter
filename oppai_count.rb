@@ -25,7 +25,7 @@ if ARGV[0].nil?
 else
   op_data = Oppai::Data.new(ARGV[0].to_i)
 end
-event_processor = Oppai::EventProcessor.new(op_data)
+event_processor = Oppai::EventProcessor.new(op_data, config)
 
 
 # oppai_info本体
@@ -33,7 +33,7 @@ EM.run do
   ws = Faye::WebSocket::Client.new(url)
 
   ws.on :message do |event|
-    event_processor.process(event)
+    event_processor.process(ws, event)
   end
 
   ws.on :close do
