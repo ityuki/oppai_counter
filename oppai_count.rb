@@ -39,7 +39,7 @@ EM.run do
     if Oppai::Utils.op_judge(data, config['bot_id'])
       # おっぱいコマンドとbotのreplyと編集・削除を除く直近30件の発言を保存
       if data['text'] !~ /^oppai [a-z]+$/ and not data.has_key?('subtype')
-        if op_data.mes_list.size < 30
+        if op_data.message_list.size < 30
           op_data.add_message(data['text'])
         else
           op_data.del_message
@@ -49,7 +49,7 @@ EM.run do
 
       # おっぱい数のカウント
       if data['text'] =~ /お.*?っ.*?ぱ.*?い/
-        op_data.add_oppai(data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
+        op_data.add_oppai_count(data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
       # おっぱいコマンドの呼び出し
       elsif data['text'] =~ /^oppai [a-z]+$/ and not data['text'].include?("\n")
         oppai, cmd = data['text'].split(' ')
