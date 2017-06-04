@@ -30,7 +30,7 @@ class Oppai
 
     # おっぱい数を返す
     def count
-      "現在 #{data.cnt}おっぱいです"
+      "現在 #{data.oppai_count}おっぱいです"
     end
 
     # おっぱい宣教師語録+α
@@ -44,11 +44,11 @@ class Oppai
     end
 
     def per
-      if data.mes_list.size == 0
+      if data.message_list.size == 0
         "おっぱわーが足りません"
       else
-        opper = data.mes_list.reduce(0) { |sum, m| sum += m.scan(/お.*?っ.*?ぱ.*?い/).size }
-        per = 100 * opper / data.mes_list.size
+        opper = data.message_list.reduce(0) { |sum, m| sum += m.scan(/お.*?っ.*?ぱ.*?い/).size }
+        per = 100 * opper / data.message_list.size
         "現在のおっぱい濃度は #{per} %です"
       end
     end

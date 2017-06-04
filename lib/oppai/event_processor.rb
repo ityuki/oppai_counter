@@ -30,11 +30,11 @@ class Oppai
           @oppai_data.add_oppai_count(slack_data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
         # おっぱいコマンドの呼び出し
         elsif slack_data['text'] =~ /^oppai [a-z]+$/ and not slack_data['text'].include?("\n")
-          oppai, sent_command = data['text'].split(' ')
+          oppai, sent_command = slack_data['text'].split(' ')
           ws.send({
             type:    'message',
             text:    invoke(sent_command),
-            channel: data['channel']
+            channel: slack_data['channel']
           }.to_json)
         end
       end
