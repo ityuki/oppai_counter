@@ -10,15 +10,15 @@ class Oppai
     end
 
     def add_oppai_count(count)
-      oppai_count += count
+      @oppai_count += count
     end
 
     def add_message(message)
-      message_list.push(message)
+      @message_list.push(message)
     end
 
     def del_message
-      message_list.shift
+      @message_list.shift
     end
 
   end
