@@ -1,9 +1,5 @@
 class Oppai
   class EventProcessor
-    class << self
-      # bot以外のユーザの発言かどうか判定
-    end
-
     def initialize(data, config)
       @config = config
       @oppai_data = data
