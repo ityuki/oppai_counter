@@ -3,7 +3,7 @@ class Oppai
     attr_reader :white_methods, :destroy_methods, :data, :likely
 
     def initialize(data)
-      @white_methods = %w(count word flag per help)
+      @white_methods = %w(count word flag per help version)
       @destroy_methods = %w(abort throw raise fail exit sleep
                             inspect new clone initialize)
       @likely = LikelyKeyword.new(@white_methods + @destroy_methods)
@@ -60,6 +60,10 @@ class Oppai
               oppai flag\tおっぱいフラグをたてます.\n\
               oppai per\tチャンネル内のおっぱい濃度を表示します.\n\
               oppai help\tこのヘルプを表示します."
+    end
+
+    def version
+      "oppai_info version #{Oppai::VERSION}"
     end
   end
 end
