@@ -1,12 +1,13 @@
 class Oppai
   class Data
-    attr_reader :oppai_count, :message_list, :words, :flags
+    attr_reader :oppai_count, :message_list, :words, :flags, :hello
 
     def initialize(oppai_count)
       @oppai_count = oppai_count
       @message_list = []
       @words = File.open(File.expand_path('./dicts/word.opp')).readlines.map(&:chomp)
       @flags = File.open(File.expand_path('./dicts/flag.opp')).readlines.map(&:chomp)
+      @hello = File.open(File.expand_path('./dicts/hello.opp')).readlines.map(&:chomp).map{|s| '`' + s.gsub(/`/,'｀') + '`' }
     end
 
     def add_oppai_count(count)
