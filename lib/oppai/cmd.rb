@@ -7,6 +7,7 @@ class Oppai
         'count'   => 'おっぱい数を報告します.',
         'word'    => 'おっぱい宣教師のありがたい語録を表示します.',
         'flag'    => 'おっぱいフラグをたてます.',
+        'hello'   => '色んな言語でhello worldを表示します.',
         'per'     => 'チャンネル内のおっぱい濃度を表示します.',
         'version' => 'oppai_infoのversionを表示します.',
         'help'    => 'このヘルプを表示します.'
@@ -48,6 +49,11 @@ class Oppai
     # おっぱいフラグ
     def flag
       data.flags.sample
+    end
+
+    # helloおっぱい
+    def hello
+      data.hello.sample
     end
 
     def per
