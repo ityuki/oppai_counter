@@ -6,7 +6,7 @@ class Oppai
       @white_methods = %w(count word flag per help version)
       @destroy_methods = %w(abort throw raise fail exit sleep
                             inspect new clone initialize)
-      @likely = LikelyKeyword.new(@white_methods + @destroy_methods)
+      @likely = LikelyKeyword.new(@white_methods + @destroy_methods,@white_methods)
       @data = data
     end
 
