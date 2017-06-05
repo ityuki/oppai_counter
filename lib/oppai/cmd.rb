@@ -3,10 +3,17 @@ class Oppai
     attr_reader :white_methods, :destroy_methods, :data, :likely
 
     def initialize(data)
-      @white_methods = %w(count word flag per help version)
+      @white_methods = {
+        'count'   => 'おっぱい数を報告します.',
+        'word'    => 'おっぱい宣教師のありがたい語録を表示します.',
+        'flag'    => 'おっぱいフラグをたてます.',
+        'per'     => 'チャンネル内のおっぱい濃度を表示します.',
+        'version' => 'oppai_infoのversionを表示します.',
+        'help'    => 'このヘルプを表示します.'
+      }
       @destroy_methods = %w(abort throw raise fail exit sleep
                             inspect new clone initialize)
-      @likely = LikelyKeyword.new(@white_methods + @destroy_methods,@white_methods)
+      @likely = LikelyKeyword.new(@white_methods.keys + @destroy_methods,@white_methods.keys)
       @data = data
     end
 
@@ -54,12 +61,11 @@ class Oppai
     end
 
     def help
-      "Usage: oppai <subcommand>\n\
-              oppai count\tおっぱい数を報告します.\n\
-              oppai word\tおっぱい宣教師のありがたい語録を表示します.\n\
-              oppai flag\tおっぱいフラグをたてます.\n\
-              oppai per\tチャンネル内のおっぱい濃度を表示します.\n\
-              oppai help\tこのヘルプを表示します."
+      help_text = "Usage: oppai <subcommand>\n"
+      white_methods.each do |sub_command, text|
+        help_text << "\toppai #{sub_command}: #{text}\n"
+      end
+      help_text
     end
 
     def version
