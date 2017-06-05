@@ -61,10 +61,14 @@ class Oppai
     end
 
     def help
-      help_text = "Usage: oppai <subcommand>\n"
+      max_length_command = white_methods.keys.max_by {|cmd| cmd.length }
+      help_text = "```\n"
+      help_text << "Usage: oppai <subcommand>\n"
       white_methods.each do |sub_command, text|
-        help_text << "\toppai #{sub_command}: #{text}\n"
+        just_command = sub_command.ljust(max_length_command.length)
+        help_text << "\toppai #{just_command}: #{text}\n"
       end
+      help_text << "```\n"
       help_text
     end
 
