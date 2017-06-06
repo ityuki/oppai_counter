@@ -67,7 +67,7 @@ class Oppai
       if cmd == "random"
         "あぶないぱい。自分で `oppai random` しそうになったぱい"
       else
-        self.send(@white_methods.keys.sample.intern)
+        self.send(cmd.intern)
       end
     end
 
