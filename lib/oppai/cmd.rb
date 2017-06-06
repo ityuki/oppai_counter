@@ -9,6 +9,7 @@ class Oppai
         'flag'    => 'おっぱいフラグをたてます.',
         'hello'   => '色んな言語でhello worldを表示します.',
         'per'     => 'チャンネル内のおっぱい濃度を表示します.',
+        'random'  => 'どれかのコマンドを実行します',
         'version' => 'oppai_infoのversionを表示します.',
         'help'    => 'このヘルプを表示します.'
       }
@@ -27,7 +28,12 @@ class Oppai
         # 似たようなコマンドを探す
         lcmd = likely.word(sent_command)
         if white_methods.include?(lcmd)
-          "もしかして `#{lcmd}` っぱい？"
+          "もしかして `#{lcmd}` っぱい？" + [
+            "",
+            "\n詳しくは `oppai help` を見直すか、実行してみるといいぱい",
+            "\n……じっこうするぱいとでもおもったか！",
+            "\nやれやれ。動かしてやるぱい\n" + self.send(lcmd.intern)
+          ].sample
         elsif destroy_methods.include?(lcmd)
           "`#{lcmd}` っぽい文字列を入れるなっぱい！"
         else
@@ -54,6 +60,15 @@ class Oppai
     # helloおっぱい
     def hello
       data.hello.sample
+    end
+
+    def random
+      cmd = @white_methods.keys.sample
+      if cmd == "random"
+        "あぶないぱい。自分で `oppai random` しそうになったぱい"
+      else
+        self.send(@white_methods.keys.sample.intern)
+      end
     end
 
     def per
