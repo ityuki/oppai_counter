@@ -17,14 +17,9 @@ res = HTTP.post("https://slack.com/api/rtm.start", params: {
 rc = JSON.parse(res.body)
 url = rc['url']
 
-## Oppai::Utilsのインスタンス作成
-
-## 苦し紛れのおっぱい数継承
-if ARGV[0].nil?
-  op_data = Oppai::Data.new(0)
-else
-  op_data = Oppai::Data.new(ARGV[0].to_i)
-end
+## Oppaiのインスタンス作成
+oppai = File.open('/tmp/log/oppai_count', 'r').read.chomp.to_i
+op_data = Oppai::Data.new(oppai)
 event_processor = Oppai::EventProcessor.new(op_data, config)
 
 
