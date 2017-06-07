@@ -12,7 +12,7 @@ class Oppai
 
     def add_oppai_count(count)
       @oppai_count += count
-      File.open('/tmp/log/oppai_count', 'w').puts(@oppai_count)
+      File.open('/tmp/log/oppai_count', 'w') { |f| f.puts(@oppai_count) }
     end
 
     def add_message(message)
