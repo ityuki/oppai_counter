@@ -1,4 +1,5 @@
 docker build -t opcnt .
 docker stop opcnt
 docker rm opcnt
-docker run --name opcnt -d opcnt $1
+# これ最悪
+docker run --name opcnt -v /tmp/log:/tmp/log -d opcnt
