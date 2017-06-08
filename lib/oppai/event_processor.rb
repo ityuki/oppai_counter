@@ -26,12 +26,14 @@ class Oppai
           @oppai_data.add_oppai_count(slack_data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
         # おっぱいコマンドの呼び出し
         elsif slack_data['text'] =~ /^oppai [a-z]+$/ and not slack_data['text'].include?("\n")
-          oppai, sent_command = slack_data['text'].split(' ')
-          ws.send({
-            type:    'message',
-            text:    invoke(sent_command),
-            channel: slack_data['channel']
-          }.to_json)
+          if check_sleep(slack_data)
+            oppai, sent_command = slack_data['text'].split(' ')
+            ws.send({
+              type:    'message',
+              text:    invoke(sent_command),
+              channel: slack_data['channel']
+            }.to_json)
+          end
         end
       end
     end
@@ -52,6 +54,16 @@ class Oppai
       puts e.message
       puts e.backtrace
       "よくわからないエラーが発生してるっぱい。ちょっと待つっぱい"
+    end
+
+    def check_sleep(slack_data)
+      if slack_data['text'] == 'oppai wakeup' or
+         @oppai_data.sleep_start_time.nil?      or
+         (Time.now - @oppai_data.sleep_start_time) > 60
+        true
+      else
+        false
+      end
     end
   end
 end
