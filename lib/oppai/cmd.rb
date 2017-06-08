@@ -22,6 +22,8 @@ class Oppai
     end
 
     def check_and_execute(sent_command)
+      return nil if !check_sleep(sent_command)
+
       if white_methods.include?(sent_command)
         self.send(sent_command.intern)
       elsif destroy_methods.include?(sent_command)
@@ -41,6 +43,16 @@ class Oppai
         else
           "`#{sent_command}` なんてコマンドはないっぱい。 `oppai help` を見て出直してくるっぱい"
         end
+      end
+    end
+
+    def check_sleep(sent_command)
+      if sent_command == 'wakeup' or
+         @oppai_data.sleep_start_time.nil?      or
+         (Time.now - @oppai_data.sleep_start_time) > 60
+        true
+      else
+        false
       end
     end
 
