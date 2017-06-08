@@ -18,7 +18,8 @@ rc = JSON.parse(res.body)
 url = rc['url']
 
 ## Oppaiのインスタンス作成
-oppai = File.open('/tmp/log/oppai_count', 'r').read.chomp.to_i
+oppai = 0
+oppai = File.open('/tmp/log/oppai_count', 'r') do { |f| oppai = f.read.chomp.to_i }
 op_data = Oppai::Data.new(oppai)
 event_processor = Oppai::EventProcessor.new(op_data, config)
 
