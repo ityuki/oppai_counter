@@ -6,6 +6,8 @@
 #    > load "irb_oppaiload.rb"
 #    > @op.check_and_execute("help")
 
+default_external_encoding = Encoding.default_external
+
 Encoding.default_internal = Encoding::UTF_8
 Encoding.default_external = Encoding::UTF_8
 puts "debug Oppai!"
@@ -29,7 +31,7 @@ class Oppai
   class TestOppaiLoad
     class WSemu
       def send(json)
-        puts "SEND_MSG",JSON.parse(json)['text']
+        puts JSON.parse(json)['text']
       end
     end
     class EVENTemu
@@ -67,4 +69,14 @@ end
 puts "@data = Oppai::Data, @op = Oppai::Cmd, @ev = Oppai::EventProcessor"
 puts 'test message: @test.send("text")'
 puts '  example> @test.send("oppai help")'
+
+if $0 == __FILE__
+  puts "デバッグモードで実行しています"
+  puts "適当に入力すると、oppai_infoの反応が返ります（元々反応しない文字列を入れると反応しません）"
+  puts "終了するには、Ctrl+Cなりを押して脱出してください"
+  Encoding.default_external = default_external_encoding
+  while(true) do
+    @test.send(gets.chomp.encode("utf-8"))
+  end
+end
 
