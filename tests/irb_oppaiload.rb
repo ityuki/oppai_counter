@@ -66,5 +66,5 @@ end
 
 puts "@data = Oppai::Data, @op = Oppai::Cmd, @ev = Oppai::EventProcessor"
 puts 'test message: @test.send("text")'
-puts '  example> @text.send("oppai help")'
+puts '  example> @test.send("oppai help")'
 
