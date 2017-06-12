@@ -12,7 +12,7 @@ class Oppai
       # botの発言はシカト
       if op_judge(slack_data, @config['bot_id'])
         # おっぱいコマンドとbotのreplyと編集・削除を除く直近30件の発言を保存
-        if slack_data['text'] !~ /^oppai [a-z]+$/ and not slack_data.has_key?('subtype')
+        if slack_data['text'] !~ /^oppai +[a-z]+( +.*)?$/ and not slack_data.has_key?('subtype')
           if @oppai_data.message_list.size < 30
             @oppai_data.add_message(slack_data['text'])
           else
@@ -25,9 +25,9 @@ class Oppai
         if slack_data['text'] =~ /お.*?っ.*?ぱ.*?い/
           @oppai_data.add_oppai_count(slack_data['text'].scan(/お.*?っ.*?ぱ.*?い/).size)
         # おっぱいコマンドの呼び出し
-        elsif slack_data['text'] =~ /^oppai [a-z]+$/ and not slack_data['text'].include?("\n")
+        elsif slack_data['text'] =~ /^oppai +[a-z]+( +.*)?$/ and not slack_data['text'].include?("\n")
           if check_sleep(slack_data)
-            oppai, sent_command = slack_data['text'].split(' ')
+            oppai, sent_command = slack_data['text'].split(/ +/,2)
             ws.send({
               type:    'message',
               text:    invoke(sent_command),
