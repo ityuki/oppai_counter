@@ -31,11 +31,11 @@ class Oppai
         lcmd = likely.word(sent_command)
         if white_methods.include?(lcmd)
           "もしかして `#{lcmd}` っぱい？" + [
-            "",
-            "\n詳しくは `oppai help` を見直すか、実行してみるといいぱい",
-            "\n……じっこうするぱいとでもおもったか！",
-            "\nやれやれ。動かしてやるぱい\n" + self.send(lcmd.intern)
-          ].sample
+            -> c {""},
+            -> c {"\n詳しくは `oppai help` を見直すか、実行してみるといいぱい"},
+            -> c {"\n……じっこうするぱいとでもおもったか！"},
+            -> c {"\nやれやれ。動かしてやるぱい\n" + self.send(c.intern)}
+          ].sample.call(lcmd)
         elsif destroy_methods.include?(lcmd)
           "`#{lcmd}` っぽい文字列を入れるなっぱい！"
         else
