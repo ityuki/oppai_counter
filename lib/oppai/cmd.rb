@@ -26,7 +26,7 @@ class Oppai
       if white_methods.include?(cmd)
         self.send(cmd.intern,arg)
       elsif destroy_methods.include?(cmd)
-        "散々苦渋を舐めさせられた `#{sent_command}` は対策済みっぱい。一昨日きやがれっぱい"
+        "散々苦渋を舐めさせられた `#{cmd}` は対策済みっぱい。一昨日きやがれっぱい"
       else
         # 似たようなコマンドを探す
         lcmd = likely.word(cmd)
